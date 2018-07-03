@@ -7,12 +7,14 @@ import org.abhyan.tradecraft.model.HistoricalData;
 import org.abhyan.tradecraft.service.HistoricalDataService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1")
 public class HistoricalDataController {
 	@Autowired
 	private HistoricalDataService historicalDataService;
@@ -36,10 +38,13 @@ public class HistoricalDataController {
 	}
 
 	
-	@RequestMapping(value="/api/v1/histdata",method=RequestMethod.GET)
-	public HistoricalData getHistDataForTickerAndDate() {
+	@RequestMapping(value="/histdata",method=RequestMethod.GET)
+	public ResponseEntity<HistoricalData> getHistDataForTickerAndDate() {
 		logger.info("--Entered Into getHistData");
-		return historicalDataService.getHistoricalDataForTickerAndDate("SUNPHARMA","2018-06-20");
+		
+		HistoricalData histData = historicalDataService.getHistoricalDataForTickerAndDate("SUNPHARMA","2018-06-20");
+		return new ResponseEntity<HistoricalData>(histData, HttpStatus.OK);
+		//return histData;
 		
 	}
 

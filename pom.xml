@@ -161,20 +161,23 @@
     <artifactId>commons-logging</artifactId>
     <version>1.2</version>
 </dependency>
-
-    	<dependency>
-    		<groupId>com.fasterxml.jackson.core</groupId>
-    		<artifactId>jackson-core</artifactId>
-    		<version>2.9.5</version>
-    	</dependency>
-     
-    	<dependency>
-    		<groupId>com.fasterxml.jackson.core</groupId>
-    		<artifactId>jackson-databind</artifactId>
-    		<version>2.9.5</version>
-    	</dependency>
+<!-- 
+   <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.10</version>
+		</dependency>
+-->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.9.5</version>
+</dependency>
+    	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+   	
     </dependencies>
   
+        
   <build>
     <testSourceDirectory>src/main/test</testSourceDirectory>
     <resources>
@@ -198,6 +201,7 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+          <executable>C:\Program Files\Java\jdk1.8.0_171\bin\javac.exe</executable>
         </configuration>
       </plugin>
       <plugin>

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.abhyan.tradecraft.constants.ConstParameters;
-
 @Entity
 @Table(name=ConstParameters.TABLE_HISTDATA)
 public class HistoricalData {
