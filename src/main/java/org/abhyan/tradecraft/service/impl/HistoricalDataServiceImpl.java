@@ -1,5 +1,6 @@
 package org.abhyan.tradecraft.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.abhyan.tradecraft.dao.HistoricalDataDAO;
@@ -31,9 +32,16 @@ public class HistoricalDataServiceImpl implements HistoricalDataService{
 
 	@Override
 	@Transactional
-	public HistoricalData getHistoricalDataForTickerAndDate(String ticker, String tradeDate) {
+	public HistoricalData getHistoricalDataForTickerAndDate(String ticker, Date tradeDate) {
 		return historicalDataDAO.getHistoricalDataForTickerAndDate(ticker, tradeDate);
 	}
-	
 
+	@Override
+	@Transactional
+	public List<HistoricalData> getHistoricalDataForTickerFromDate(String ticker,Date tradeDate) {
+		return historicalDataDAO.getHistoricalDataForTickerFromDate(ticker,tradeDate);
+	}
+
+
+	
 }

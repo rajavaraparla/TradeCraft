@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.abhyan.tradecraft.constants.ConstParameters;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name=ConstParameters.TABLE_HISTDATA)
 public class HistoricalData {
 

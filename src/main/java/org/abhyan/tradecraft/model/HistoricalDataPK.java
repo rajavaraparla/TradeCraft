@@ -10,8 +10,13 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.abhyan.tradecraft.constants.ConstParameters;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author nvarapar
@@ -27,7 +32,10 @@ public class HistoricalDataPK implements Serializable{
 
 	@Column(name = ConstParameters.COLUMN_TICKER)
 	private String ticker;
-
+	
+	//@JsonFormat(shape=JsonFormat.Shape.STRING,pattern= ConstParameters.DATE_FORMAT)
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ConstParameters.DATE_FORMAT, timezone = "PST")
+	@JsonSerialize(using = CustomDateSerializer.class)
 	@Column(name = ConstParameters.COLUMN_TRADE_DATE)
 	private Date tradeDate;
 
@@ -121,6 +129,7 @@ public class HistoricalDataPK implements Serializable{
 	/**
 	 * @return the tradeDate
 	 */
+	
 	public Date getTradeDate() {
 		return tradeDate;
 	}

@@ -1,20 +1,28 @@
 package org.abhyan.tradecraft.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import org.abhyan.tradecraft.constants.ConstParameters;
 import org.abhyan.tradecraft.model.HistoricalData;
+import org.abhyan.tradecraft.model.HistoricalDataPK;
 //import org.abhyan.tradecraft.model.IEOD_5Min;
 import org.abhyan.tradecraft.service.HistoricalDataService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/histdata")
 public class HistoricalDataController {
 	@Autowired
 	private HistoricalDataService historicalDataService;
@@ -38,16 +46,49 @@ public class HistoricalDataController {
 	}
 
 	
-	@RequestMapping(value="/histdata",method=RequestMethod.GET)
-	public ResponseEntity<HistoricalData> getHistDataForTickerAndDate() {
-		logger.info("--Entered Into getHistData");
+	@RequestMapping(value="/getohlcfortickeranddate",method=RequestMethod.POST)
+	public ResponseEntity<HistoricalData> getHistDataForTickerAndDate(@RequestBody HistoricalDataPK histdataPK) {
+		logger.info("--Entered Into getHistDataForTickerAndDate");
 		
-		HistoricalData histData = historicalDataService.getHistoricalDataForTickerAndDate("SUNPHARMA","2018-06-20");
+		String ticker = histdataPK.getTicker();
+		Date date = histdataPK.getTradeDate();
+		System.out.println("TRADE DATE : -"+date);
+		HistoricalData histData = historicalDataService.getHistoricalDataForTickerAndDate(ticker,date);
 		return new ResponseEntity<HistoricalData>(histData, HttpStatus.OK);
 		//return histData;
 		
 	}
 
+	@RequestMapping(value="/getohlcfromtickeranddate",method=RequestMethod.POST)
+	public ResponseEntity<List<HistoricalData>> getHistDataFromTickerAndDate(@RequestBody HistoricalDataPK histdataPK) {
+		logger.info("--Entered Into getHistDataFromTickerAndDate");
+		
+		String ticker = histdataPK.getTicker();
+		Date date = histdataPK.getTradeDate();
+		System.out.println("TRADE DATE : -"+date);
+		
+		List<HistoricalData> histData = historicalDataService.getHistoricalDataForTickerFromDate(ticker,date);
+//		for (HistoricalData historicalData : histData) {
+//			System.out.println(historicalData.getHistPK().getTradeDate());
+//			DateFormat dateFormat = new SimpleDateFormat(ConstParameters.DATE_FORMAT);
+//			System.out.println(dateFormat.format(historicalData.getHistPK().getTradeDate()));
+//			System.out.println(historicalData.getOpen());
+//		}
+
+		return new ResponseEntity<List<HistoricalData>>(histData, HttpStatus.OK);
+		//return histData;
+		
+	}
+
+	@RequestMapping(value="/{ticker}",method=RequestMethod.GET)
+	public ResponseEntity<List<HistoricalData>> getHistDataForTicker(@PathVariable("ticker") String ticker) {
+		logger.info("--Entered Into getHistData");
+		
+		List<HistoricalData> histData = historicalDataService.getAllHistoricalDataForTicker(ticker);
+		return new ResponseEntity<List<HistoricalData>>(histData, HttpStatus.OK);
+		//return histData;
+		
+	}
 		
 
 
